@@ -30,6 +30,7 @@ $(document).ready(function() {
         }
         drawTestCases(allTestCases.confirmed, testPlanId, permissions);
         treeViewBind();
+        toolbarEvents();
     });
 
 });
@@ -191,4 +192,19 @@ function attachEvents(testCases, testPlanId, permissions) {
     function getCaseIdFromEvent(ev) {
         return $(ev.target).closest('.js-testcase-row').data('testcase-pk');
     }
+}
+
+function toolbarEvents() {
+    $('.js-checkbox-toolbar').click(function(ev){
+        const isChecked = ev.target.checked,
+            testCaseRows = $('.js-testcase-row').find('input');
+
+        testCaseRows.each(function(index, tc) {
+            tc.checked = isChecked;
+        });
+
+        testCaseRows.click(function() {
+            ev.target.checked = false;
+        });
+    });
 }
